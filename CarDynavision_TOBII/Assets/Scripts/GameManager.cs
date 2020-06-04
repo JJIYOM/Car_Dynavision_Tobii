@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     public Text EarlyText;
     public Text eAllText; //eye (시선+break)
     public Text tAllText; //time (시선+break)
+    public Text[] ResponseTime;
+
     public GameObject ResultPanel;
     public List<float> SeeData;
     public List<float> BreakData;
@@ -233,6 +235,7 @@ public class GameManager : MonoBehaviour
 
                 for (int i = 0; i < SeeData.Count; i++)
                 {
+                    ResponseTime[i].text = string.Format("{0:N3}", SeeData[i]);
                     sum += SeeData[i];
                 }
                 for (int i = 0; i < BreakData.Count; i++)

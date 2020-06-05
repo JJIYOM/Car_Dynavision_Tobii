@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
 
                 FirstLightIn60 = false;
                 Debug.Log("Dyna멈춰!");
-                randomNum = Random.Range(0, 54);
+                randomNum = Random.Range(0, 69);
                 Overlap.Add(randomNum);//랜덤 나온거 추가하고
                 Spheres.transform.GetChild(randomNum).gameObject.SetActive(true); //총 33개(0~32)   //총 54개로 변경
                 timerOn = true;

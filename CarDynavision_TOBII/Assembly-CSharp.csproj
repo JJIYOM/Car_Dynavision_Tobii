@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\Car\SkidTrail.cs" />
     <Compile Include="Assets\Scripts\Car\Suspension.cs" />
     <Compile Include="Assets\Scripts\Car\WheelEffects.cs" />
+    <Compile Include="Assets\Scripts\CarMirror.cs" />
     <Compile Include="Assets\Scripts\Car_Data.cs" />
     <Compile Include="Assets\Scripts\DynaGazeEvent.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />

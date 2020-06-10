@@ -14,8 +14,20 @@ public class HeadMovement : MonoBehaviour
 
 	public Transform Head;
 	public float Responsiveness = 10f;
+    public Vector3 HeadRotation;
 
-	void Update()
+    private static HeadMovement hm;
+    public static HeadMovement HM
+    {
+        get { return hm; }
+    }
+
+    private void Awake()
+    {
+        hm = GetComponent<HeadMovement>();
+    }
+
+    void Update()
 	{
 		var headPose = TobiiAPI.GetHeadPose();
 		if (headPose.IsRecent())
@@ -39,6 +51,8 @@ public class HeadMovement : MonoBehaviour
 			RightEyePosition = new Vector2(Mathf.Sin(yaw * Mathf.Deg2Rad), Mathf.Sin(pitch * Mathf.Deg2Rad));
 		}
 
-		LeftEyeClosed = RightEyeClosed = TobiiAPI.GetUserPresence().IsUserPresent() && (Time.unscaledTime - gazePoint.Timestamp) > 0.15f || !gazePoint.IsRecent();
-	}
+        LeftEyeClosed = RightEyeClosed = TobiiAPI.GetUserPresence().IsUserPresent() && (Time.unscaledTime - gazePoint.Timestamp) > 0.15f || !gazePoint.IsRecent();
+
+        HeadRotation = Head.transform.localRotation.eulerAngles; // 머리 회전값(오일러 각도) 출력
+    }
 }

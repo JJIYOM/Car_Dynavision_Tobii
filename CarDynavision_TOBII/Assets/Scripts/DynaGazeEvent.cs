@@ -186,6 +186,10 @@ public class DynaGazeEvent : MonoBehaviour
         temp.t_Time = T_time.ToString();
         temp.EyeLocation_x = (gazePoint.Screen.x - 12 - 960).ToString();
         temp.EyeLocation_y = (gazePoint.Screen.y - 12 - 540).ToString();
+        temp.HeadPose_x = HeadMovement.HM.HeadRotation.x.ToString();
+        temp.HeadPose_y = HeadMovement.HM.HeadRotation.y.ToString();
+        temp.HeadPose_z = HeadMovement.HM.HeadRotation.z.ToString();
+
 
         // Car_Data.Car.Add(temp);
 
@@ -247,10 +251,10 @@ public class DynaGazeEvent : MonoBehaviour
     {
         string filePath = Car_Data.getPath();
         StreamWriter outStream = System.IO.File.CreateText(filePath);
-        outStream.WriteLine("Time,EyeLocation_x,EyeLocation_y,CheckPoint,LightOn");
+        outStream.WriteLine("Time,EyeLocation_x,EyeLocation_y,HeadPose_x,HeadPose_y,HeadPose_z,CheckPoint,LightOn");
         for (int i = 0; i < Car_Data.Car.Count; i++)
         {
-            string str = Car_Data.Car[i].t_Time + "," + Car_Data.Car[i].EyeLocation_x + "," + Car_Data.Car[i].EyeLocation_y + "," + Car_Data.Car[i].CheckPoint + "," + Car_Data.Car2[i].LightOn;
+            string str = Car_Data.Car[i].t_Time + "," + Car_Data.Car[i].EyeLocation_x + "," + Car_Data.Car[i].EyeLocation_y + "," + Car_Data.Car[i].HeadPose_x + "," + Car_Data.Car[i].HeadPose_y + "," + Car_Data.Car[i].HeadPose_z + "," + Car_Data.Car[i].CheckPoint + "," + Car_Data.Car2[i].LightOn;
             outStream.WriteLine(str);
         }
 

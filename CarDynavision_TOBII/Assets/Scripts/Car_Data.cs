@@ -24,6 +24,9 @@ public class Car
     public string t_Time { get; set; }
     public string EyeLocation_x { get; set; }
     public string EyeLocation_y { get; set; }
+    public string HeadPose_x { get; set; }
+    public string HeadPose_y { get; set; }
+    public string HeadPose_z { get; set; }
     public string CheckPoint { get; set; }
 }
 

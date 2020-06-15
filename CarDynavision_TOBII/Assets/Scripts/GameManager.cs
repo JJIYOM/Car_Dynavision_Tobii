@@ -30,12 +30,13 @@ public class GameManager : MonoBehaviour
 
     public GameObject Sphere;
     public GameObject Spheres;
+    public GameObject RightPage;
+    public GameObject LeftPage;
     public Text EyeText;
     public Text timeText;
     public Text EarlyText;
-    public Text eAllText; //eye (시선+break)
-    public Text tAllText; //time (시선+break)
     public Text[] ResponseTime;
+    public Text[] BrakeTime;
 
     public GameObject ResultPanel;
     public List<float> SeeData;
@@ -235,11 +236,12 @@ public class GameManager : MonoBehaviour
 
                 for (int i = 0; i < SeeData.Count; i++)
                 {
-                    ResponseTime[i].text = string.Format("{0:N3}", SeeData[i]);
+                    ResponseTime[i].text = string.Format("{0:N3}", SeeData[i]);                 
                     sum += SeeData[i];
                 }
                 for (int i = 0; i < BreakData.Count; i++)
                 {
+                    BrakeTime[i].text = string.Format("{0:N3}", BreakData[i]);
                     Bsum += BreakData[i];
                 }
 
@@ -249,32 +251,25 @@ public class GameManager : MonoBehaviour
                 switch (type)
                 {
                     case 1: //시선
-                        EyeText.text = string.Format("평균 시간(시선) : {0:N3}초", total);
-                        EyeText.gameObject.SetActive(true);
+                        EyeText.text = string.Format("평균 시선 반응 시간 : {0:N3}초", total);                     
+                        RightPage.gameObject.SetActive(false);
                         break;
                     case 2: //break
-                        timeText.text = string.Format("반응 시간 : {0:N3}초", Btotal);
-                        timeText.gameObject.SetActive(true);
+                        timeText.text = string.Format("평균 시간 : {0:N3}초", Btotal);
+
+                        SceneChange.SC.RightPage();
+                        LeftPage.gameObject.SetActive(false);
                         break;
                     case 3:
-                        eAllText.text = string.Format("시선 측정 : {0:N3}초", total);
-                        tAllText.text = string.Format("반응 시간 : {0:N3}초", Btotal);
-                        eAllText.gameObject.SetActive(true);
-                        tAllText.gameObject.SetActive(true);
+                        EyeText.text = string.Format("평균 시선 반응 시간 : {0:N3}초", total);
+                        timeText.text = string.Format("평균 시간 : {0:N3}초", Btotal);
+
                         break;
                 }
 
                 break;
         }
     }
-
-    //public void saveCarXResult()
-    //{
-    //    CarR temp = new CarR(); //틀림, 반응시간 추가...
-    //    temp.Response_Time = "0";
-    //    temp.O_X = "X";
-    //    Car_Result.CarR.Add(temp);
-    //}
 
    
 }

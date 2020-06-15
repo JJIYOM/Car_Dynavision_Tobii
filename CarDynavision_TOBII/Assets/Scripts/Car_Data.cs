@@ -55,6 +55,7 @@ public class CarR
 {
     public string Stage { get; set; }
     public string Response_Time { get; set; }
+    public string Brake_Time { get; set; }
     public string O_X { get; set; }
     public string BallNum { get; set; }
 }

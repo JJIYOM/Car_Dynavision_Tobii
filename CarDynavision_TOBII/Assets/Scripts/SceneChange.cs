@@ -7,6 +7,19 @@ using UnityEngine.SceneManagement;
 
 public class SceneChange : MonoBehaviour
 {
+    public GameObject ResultData;
+
+    private static SceneChange sc;
+    public static SceneChange SC
+    {
+        get { return sc; }
+    }
+
+    private void Awake()
+    {
+        sc = GetComponent<SceneChange>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,11 +54,27 @@ public class SceneChange : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    public void Exit()
+    {
+        Application.Quit();
+    }
+
     public void SetType(int num)
     {
         SceneManager.LoadScene("Dynavision");
         GameManager.type = num;
     }
 
-   
+    public void RightPage()
+    {
+        Debug.Log("눌림");
+        ResultData.transform.localPosition = new Vector3(-1920f, 0f, 0f);
+    }
+
+    public void LeftPage()
+    {
+        ResultData.transform.localPosition = new Vector3(0f, 0f, 0f);
+    }
+
+
 }

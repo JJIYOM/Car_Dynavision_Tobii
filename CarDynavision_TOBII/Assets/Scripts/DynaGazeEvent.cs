@@ -227,6 +227,7 @@ public class DynaGazeEvent : MonoBehaviour
 
         temp.Stage = ""+Stage;
         temp.Response_Time = "" + GameManager.GM.see_time;
+        temp.Brake_Time = "" + GameManager.GM.resultTime;
         temp.O_X = "O";
         temp.BallNum = GameManager.GM.Overlap[Stage - 1].ToString();
         
@@ -240,10 +241,13 @@ public class DynaGazeEvent : MonoBehaviour
     {
         Stage++;
         CarR temp = new CarR(); //틀림, 반응시간 추가...
+
         temp.Stage = "" + Stage;
         temp.Response_Time = "" + 0;
+        temp.Brake_Time = "" + 0;
         temp.O_X = "X";
         temp.BallNum = GameManager.GM.Overlap[Stage-1].ToString();
+
         Car_Result.CarR.Add(temp);
     }
 
@@ -265,10 +269,10 @@ public class DynaGazeEvent : MonoBehaviour
     {
         string filePath = Car_Result.getPath();
         StreamWriter outStream = System.IO.File.CreateText(filePath);
-        outStream.WriteLine("Stage,Response_Time,O_X,BallNum");
+        outStream.WriteLine("Stage,Response_Time,Brake_Time,O_X,BallNum");
         for (int i = 0; i < Car_Result.CarR.Count; i++)
         {
-            string str = Car_Result.CarR[i].Stage + "," + Car_Result.CarR[i].Response_Time + "," + Car_Result.CarR[i].O_X + ","  + Car_Result.CarR[i].BallNum;
+            string str = Car_Result.CarR[i].Stage + "," + Car_Result.CarR[i].Response_Time + "," + Car_Result.CarR[i].Brake_Time + "," + Car_Result.CarR[i].O_X + ","  + Car_Result.CarR[i].BallNum;
 
             outStream.WriteLine(str);
         }

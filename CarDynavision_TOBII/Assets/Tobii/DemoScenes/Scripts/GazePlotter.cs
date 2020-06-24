@@ -37,6 +37,7 @@ public class GazePlotter : MonoBehaviour
     private bool _hasHistoricPoint;
     private Vector3 _historicPoint;
 
+    //추가한 코드
     public GameObject car;
 
     public bool UseFilter
@@ -129,6 +130,7 @@ public class GazePlotter : MonoBehaviour
         return (Time.unscaledTime - gazePoint.Timestamp) < MaxVisibleDurationInSeconds;
     }
 
+    //중점적으로 볼 코드
     private void UpdateGazeBubblePosition(GazePoint gazePoint) //position, rotation
     {
         Vector3 gazePointInWorld = ProjectToPlaneInWorld(gazePoint);
@@ -147,7 +149,7 @@ public class GazePlotter : MonoBehaviour
         //else if (car.transform.eulerAngles.y > 90f && car.transform.eulerAngles.y <= 180f)
         //    VisualizationDistance = car.transform.eulerAngles.y % -10;
 
-
+        //이거 보기
         transform.eulerAngles = car.transform.eulerAngles;
     }
 
@@ -170,11 +172,14 @@ public class GazePlotter : MonoBehaviour
         return ((_last + 1) % PointCloudSize);
     }
 
+    //중점적으로 볼 코드
     private Vector3 ProjectToPlaneInWorld(GazePoint gazePoint)
     {
         Vector3 gazeOnScreen = gazePoint.Screen;
-        gazeOnScreen += (this.transform.InverseTransformDirection(transform.forward) /*transform.forward /*유동적인값*/ * VisualizationDistance /*고정값*/); //메인카메라부터 게이즈까지 거리 = 10f
 
+        //World 좌표를 Local 좌표로 변경
+        gazeOnScreen += (this.transform.InverseTransformDirection(transform.forward) /*transform.forward /*유동적인값*/ * VisualizationDistance /*고정값*/); //메인카메라부터 게이즈까지 거리 = 10f
+        
         return Camera.main.ScreenToWorldPoint(gazeOnScreen);
         //transform.forward z 값 보정 필요
     }
@@ -189,8 +194,8 @@ public class GazePlotter : MonoBehaviour
 
         var smoothedPoint = new Vector3(
             point.x * (1.0f - FilterSmoothingFactor) + _historicPoint.x * FilterSmoothingFactor,
-            point.y * (1.0f - FilterSmoothingFactor) + _historicPoint.y * FilterSmoothingFactor, /*transform.loposition.z);*/
-            point.z * (1.0f - FilterSmoothingFactor) + _historicPoint.z * FilterSmoothingFactor); //여기서 보정?
+            point.y * (1.0f - FilterSmoothingFactor) + _historicPoint.y * FilterSmoothingFactor,
+            point.z * (1.0f - FilterSmoothingFactor) + _historicPoint.z * FilterSmoothingFactor); 
 
         _historicPoint = smoothedPoint;
 

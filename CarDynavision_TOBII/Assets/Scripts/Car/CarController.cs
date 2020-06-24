@@ -70,6 +70,8 @@ namespace UnityStandardAssets.Vehicles.Car
         public float Revs { get; private set; }
         public float AccelInput { get; private set; }
         public float thrustTorque;
+        
+        //변수 추가
         public float Carspeed;
 
         // Use this for initialization
@@ -210,7 +212,8 @@ namespace UnityStandardAssets.Vehicles.Car
                         m_Rigidbody.velocity = (m_Topspeed / 3.6f) * m_Rigidbody.velocity.normalized;
                     break;
             }
-            //Debug.Log(speed);
+
+            //추가한 코드
             Carspeed = speed;
         }
 

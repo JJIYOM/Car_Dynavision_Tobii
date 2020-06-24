@@ -2,24 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * 사이드미러&룸미러 설정 스크립트 (카메라 좌우반전)
+ * https://midason.tistory.com/139 참고
+ */
+
 public class CarMirror : MonoBehaviour
 {
-    private Camera CameraMirror;
+    private Camera CameraMirror; 
 
     void Awake()
     {
         CameraMirror = GetComponent<Camera>();        
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void OnPreCull()

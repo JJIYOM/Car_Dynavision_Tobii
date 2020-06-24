@@ -2,6 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Text;
 
+/*
+ * Logitech과 유니티 연동 스크립트
+ */
+
 public class LogitechSteeringWheel : MonoBehaviour
 {
 
@@ -27,10 +31,10 @@ public class LogitechSteeringWheel : MonoBehaviour
         //Debug.Log(LogitechGSDK.LogiPlaySpringForce(0, 0, 0, -100) + "  " + LogitechGSDK.LogiPlaySpringForce(1,0,0,-100) + "   " + LogitechGSDK.LogiPlayConstantForce(0, -100)+"   "+ LogitechGSDK.LogiPlayConstantForce(1, -100));
 
         //All the test functions are called on the first device plugged in(index = 0)
-        if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(1))
+        if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(1)) //(0/1 중에서 demo 프로그램을 통해 연결되어 있는 번호 찾고 넣어주기) 
         {
             Debug.Log("연결");
-            LogitechGSDK.DIJOYSTATE2ENGINES recs = LogitechGSDK.LogiGetStateUnity(1);
+            LogitechGSDK.DIJOYSTATE2ENGINES recs = LogitechGSDK.LogiGetStateUnity(1); //(0/1 중에서 demo 프로그램을 통해 연결되어 있는 번호 찾고 넣어주기) 
 
             // 첫번째는 기기 , 두번째는 스프링 중심값, 세번째는 스프링 강도, 네번째는 편향
             LogitechGSDK.LogiPlaySpringForce(0, 0, 20, -40);
@@ -53,6 +57,7 @@ public class LogitechSteeringWheel : MonoBehaviour
 
         }
     }
+
     void OnApplicationQuit()
     {
         Debug.Log("SteeringShutdown:" + LogitechGSDK.LogiSteeringShutdown());

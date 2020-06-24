@@ -4,9 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityStandardAssets.CrossPlatformInput;
 
+/*
+ * Logitech - 자동차 오브젝트 연결 스크립트
+ */
+
 namespace UnityStandardAssets.Vehicles.Car
 {
-
     [RequireComponent(typeof(CarController))]
     public class CarUserControl : MonoBehaviour
     {
@@ -51,25 +54,19 @@ namespace UnityStandardAssets.Vehicles.Car
             m_Car = GetComponent<CarController>();
         }
 
-        public void Start()
-        {
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    //Debug.Log(CarController.Carcontroller.m_WheelColliders[i].motorTorque);
-            //    motor_torque.Add(CarController.Carcontroller.m_WheelColliders[i].motorTorque);
-            //    brake_torque.Add(CarController.Carcontroller.m_WheelColliders[i].brakeTorque);
-
-            //}
-        }
         private void FixedUpdate()
         {
             // pass the input to the car!
             //float h = CrossPlatformInputManager.GetAxis("Horizontal");
             //float v = CrossPlatformInputManager.GetAxis("Vertical");
-            GetInput(); //logitech 값 받아오기
-            Steer(); //핸들 회전
+
+            GetInput(); //logitech 값 받아오기(변환)
+
+            Steer(); //핸들 회전    
             RPM(); //계기판, rpm
-            CarSpeed(); //속도계
+            CarSpeed(); //속도계         
+
+            //자동차 이동 관련
 
             float h = handle_Input;
             float v = accel_Input;
@@ -77,31 +74,31 @@ namespace UnityStandardAssets.Vehicles.Car
 #if !MOBILE_INPUT
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");
 
-            if (drivingMode == -1)
+            if (drivingMode == -1) //drive시 이동
                 m_Car.Move(h, v, v, handbrake);
-            else if (drivingMode == 1)
+            else if (drivingMode == 1) //후진
                 m_Car.Move(h, -v, -v, handbrake);//Move(float steering, float accel, float footbrake, float handbrake)
-            else
+            else //중립
             { }
 #else
             m_Car.Move(h, v, v, 0f);
             
 #endif
-            if (break_Input > 0)
+            if (break_Input > 0) //브레이크를 밟을 때
             {
 
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 4; i++) //바퀴4개
                 {
-                    CarController.Carcontroller.m_WheelColliders[i].motorTorque = 0f;
-                    CarController.Carcontroller.m_WheelColliders[i].brakeTorque = break_Input * 100000f;
+                    CarController.Carcontroller.m_WheelColliders[i].motorTorque = 0f; //모터 토크 값 설정
+                    CarController.Carcontroller.m_WheelColliders[i].brakeTorque = break_Input * 100000f; //브레이크 토크 값 설정 (끼익 하고 빠르게 급정거 할 수 있게)
                     //m_Car.Move(h, v, v, handbrake);
                 }
             }
-            else
+            else //안밟았을 때
             {
                 if (CarController.Carcontroller.CurrentSpeed <= 0.0001f)
                 {
-                    for (int i = 0; i < 4; i++)
+                    for (int i = 0; i < 4; i++) //바퀴4개
                     {
                         CarController.Carcontroller.m_WheelColliders[i].motorTorque = 1f;
                         CarController.Carcontroller.m_WheelColliders[i].brakeTorque = 0f;
@@ -110,15 +107,21 @@ namespace UnityStandardAssets.Vehicles.Car
             }
         }
 
-        public void GetInput()
+        public void GetInput() //logitech 데이터 변환
         {
+            //raw 값 받아오기
             LogitechGSDK.DIJOYSTATE2ENGINES recs = LogitechGSDK.LogiGetStateUnity(1);
            
             Debug.Log(recs);
 
+            //변환(Demo 프로그램보면서 값 찾기)
             handle_Input = (recs.lX / 32768f);
             accel_Input = (1 - (recs.lY / 32767f)) / 2;
             break_Input = (1 - (recs.lRz / 32767f)) / 2;
+
+            // -1 : 전진
+            // 0 : 중립
+            // 1 : 후진
 
             // 기어를 위로 올리면 전진
             if (recs.rgbButtons[14] == 128)
@@ -132,7 +135,7 @@ namespace UnityStandardAssets.Vehicles.Car
                 drivingMode = 1;
             }
 
-            else
+            else //중립
             {
                 drivingMode = 0;
             }
@@ -142,20 +145,23 @@ namespace UnityStandardAssets.Vehicles.Car
         void Steer()
         {
             m_SteeringAngle = MaxSteerAngle * handle_Input;
+
+            //핸들 회전값을 로지텍 핸들 회전값과 동일화
             Handle.localRotation = Quaternion.Euler(0, 0, -handle_Input * 420f);
         }
 
-        void RPM()
+        void RPM() //rpm 포인터 회전값 설정
         {
             float rpm = 0f;
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++) //바퀴가 4개니까
             {
                 rpm += CarController.Carcontroller.m_WheelColliders[i].rpm;
                 //Debug.Log(CarController.Carcontroller.m_WheelColliders[i].rpm);
             }
 
-            rpm = rpm / 4;
+            rpm = rpm / 4; //rpm 평균 내기
+
             //Debug.Log(rpm);
             // 차량 내부에 있는 RPM Pointer를 Accel의 세기에 따라 변환 
             if (rpm < 0)
@@ -166,7 +172,7 @@ namespace UnityStandardAssets.Vehicles.Car
                 Rpm_Pointer.localRotation = Quaternion.Euler(0, 0, -rpm / 1000f * 240f);
         }
 
-        void CarSpeed()
+        void CarSpeed() //차량 속도 포인터 회전값 설정
         {
             float speed = 0f;
             //Debug.Log(CarController.Carcontroller.CurrentSpeed * 1.609344);

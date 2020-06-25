@@ -14,11 +14,8 @@ public class HeadMovement : MonoBehaviour
 
 	public Transform Head;
 	public float Responsiveness = 10f;
-
-    //추가한 코드
     public Vector3 HeadRotation;
 
-    #region Singleton
     private static HeadMovement hm;
     public static HeadMovement HM
     {
@@ -29,7 +26,6 @@ public class HeadMovement : MonoBehaviour
     {
         hm = GetComponent<HeadMovement>();
     }
-    #endregion
 
     void Update()
 	{
@@ -57,7 +53,6 @@ public class HeadMovement : MonoBehaviour
 
         LeftEyeClosed = RightEyeClosed = TobiiAPI.GetUserPresence().IsUserPresent() && (Time.unscaledTime - gazePoint.Timestamp) > 0.15f || !gazePoint.IsRecent();
 
-        //추가한 코드
         HeadRotation = Head.transform.localRotation.eulerAngles; // 머리 회전값(오일러 각도) 출력
     }
 }

@@ -179,7 +179,7 @@ public class GazePlotter : MonoBehaviour
 
         //World 좌표를 Local 좌표로 변경
         gazeOnScreen += (this.transform.InverseTransformDirection(transform.forward) /*transform.forward /*유동적인값*/ * VisualizationDistance /*고정값*/); //메인카메라부터 게이즈까지 거리 = 10f
-        
+
         return Camera.main.ScreenToWorldPoint(gazeOnScreen);
         //transform.forward z 값 보정 필요
     }
@@ -195,7 +195,7 @@ public class GazePlotter : MonoBehaviour
         var smoothedPoint = new Vector3(
             point.x * (1.0f - FilterSmoothingFactor) + _historicPoint.x * FilterSmoothingFactor,
             point.y * (1.0f - FilterSmoothingFactor) + _historicPoint.y * FilterSmoothingFactor,
-            point.z * (1.0f - FilterSmoothingFactor) + _historicPoint.z * FilterSmoothingFactor); 
+            point.z * (1.0f - FilterSmoothingFactor) + _historicPoint.z * FilterSmoothingFactor);
 
         _historicPoint = smoothedPoint;
 

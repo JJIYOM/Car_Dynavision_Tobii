@@ -21,7 +21,7 @@ public class CSVReader //csv 읽어오기
 
         while ((strData = sr.ReadLine()) != null)
         {
-            var strValue = strData.Split(','); 
+            var strValue = strData.Split(',');
 
             Dictionary<string, object> obj = new Dictionary<string, object>();
             for (int i = 0; i < strKey.Length; i++)

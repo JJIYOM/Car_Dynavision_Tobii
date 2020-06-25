@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class DynaGazeEvent : MonoBehaviour
 {
-    public int Stage = 0;   
+    public int Stage = 0;
     public bool IsSee = false;
     public bool IsSeeR = false;
     public bool IsBreak = false;
@@ -181,7 +181,7 @@ public class DynaGazeEvent : MonoBehaviour
         temp.HeadPose_z = HeadMovement.HM.HeadRotation.z.ToString();
 
         if (!IsSee && !IsTimeOver) //불켜지기 전 => 빈칸
-            temp.CheckPoint = ""; 
+            temp.CheckPoint = "";
         else if (!IsSee && IsTimeOver) //5초동안 보지 않고 불 꺼지면
             temp.CheckPoint = "X";
         else if (IsSee)//불 켜졌을때 봤으면
@@ -215,12 +215,12 @@ public class DynaGazeEvent : MonoBehaviour
         CarR temp = new CarR();
 
         //데이터 설정
-        temp.Stage = ""+Stage; 
+        temp.Stage = "" + Stage;
         temp.Response_Time = "" + GameManager.GM.see_time;
         temp.Brake_Time = "" + GameManager.GM.resultTime;
         temp.O_X = "O";
         temp.BallNum = GameManager.GM.Overlap[Stage - 1].ToString();
-        
+
         //temp.StayTime = stayTime.ToString();
         Car_Result.CarR.Add(temp);
     }
@@ -232,10 +232,10 @@ public class DynaGazeEvent : MonoBehaviour
 
         //데이터 설정
         temp.Stage = "" + Stage;
-        temp.Response_Time = "" + 0; 
+        temp.Response_Time = "" + 0;
         temp.Brake_Time = "" + 0;
         temp.O_X = "X";
-        temp.BallNum = GameManager.GM.Overlap[Stage-1].ToString();
+        temp.BallNum = GameManager.GM.Overlap[Stage - 1].ToString();
 
         Car_Result.CarR.Add(temp);
     }
@@ -263,7 +263,7 @@ public class DynaGazeEvent : MonoBehaviour
 
         for (int i = 0; i < Car_Result.CarR.Count; i++) //12번(단계 기준)
         {
-            string str = Car_Result.CarR[i].Stage + "," + Car_Result.CarR[i].Response_Time + "," + Car_Result.CarR[i].Brake_Time + "," + Car_Result.CarR[i].O_X + ","  + Car_Result.CarR[i].BallNum;
+            string str = Car_Result.CarR[i].Stage + "," + Car_Result.CarR[i].Response_Time + "," + Car_Result.CarR[i].Brake_Time + "," + Car_Result.CarR[i].O_X + "," + Car_Result.CarR[i].BallNum;
 
             outStream.WriteLine(str);
         }

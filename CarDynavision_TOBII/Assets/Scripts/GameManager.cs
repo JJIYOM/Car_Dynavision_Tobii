@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
             IsSixty = false;
             FirstLightIn60 = true; //60km/h 아래를 찍었다!
         }
-    
+
         //차량 속도가 60km/h 이상일 때
         if (IsSixty && !lightOn && (SceneManager.GetActiveScene().name == "Dynavision")) //60km/h 이상이고, 불이 안켜진 상태, Dynavision 씬일 경우
         {
@@ -160,15 +160,15 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(5f);
 
                 if (time > 5 && (lightOn == true)) //5초 안보면
-                {       
+                {
                     //데이터 0으로 넣어주기
                     if (DynaGazeEvent.DGE.IsSeeR == false)
                         SeeData.Add(0);
                     if (DynaGazeEvent.DGE.IsBreak == false)
                         BreakData.Add(0);
-                    
+
                     DynaGazeEvent.DGE.IsSeeR = false;
-                    
+
                     //CSV에 넣어주기 (X 버전)
                     DynaGazeEvent.DGE.AddSaveXResult();
                     LightOff();
@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
             }
         }
         else //12번 반복 끝나면
-        {         
+        {
             lightOn = true;
             Debug.Log("끝났덩");
             ViewResult(); //결과화면 보여주기
@@ -209,7 +209,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    EyeText.text = string.Format("시선 측정 : {0:N2}초", see_time); 
+                    EyeText.text = string.Format("시선 측정 : {0:N2}초", see_time);
                     timeText.text = string.Format("반응 속도 : {0:N2}초", resultTime);
                 }
                 ResultPanel.SetActive(true); //패널 ON
@@ -261,5 +261,5 @@ public class GameManager : MonoBehaviour
         }
     }
 
-   
+
 }

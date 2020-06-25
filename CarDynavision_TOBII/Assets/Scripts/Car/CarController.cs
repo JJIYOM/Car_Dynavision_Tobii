@@ -70,7 +70,7 @@ namespace UnityStandardAssets.Vehicles.Car
         public float Revs { get; private set; }
         public float AccelInput { get; private set; }
         public float thrustTorque;
-        
+
         //변수 추가
         public float Carspeed;
 

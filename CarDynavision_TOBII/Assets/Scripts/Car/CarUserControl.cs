@@ -111,7 +111,7 @@ namespace UnityStandardAssets.Vehicles.Car
         {
             //raw 값 받아오기
             LogitechGSDK.DIJOYSTATE2ENGINES recs = LogitechGSDK.LogiGetStateUnity(1);
-           
+
             Debug.Log(recs);
 
             //변환(Demo 프로그램보면서 값 찾기)

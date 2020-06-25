@@ -9,11 +9,11 @@ using UnityEngine;
 
 public class CarMirror : MonoBehaviour
 {
-    private Camera CameraMirror; 
+    private Camera CameraMirror;
 
     void Awake()
     {
-        CameraMirror = GetComponent<Camera>();        
+        CameraMirror = GetComponent<Camera>();
     }
 
     public void OnPreCull()
